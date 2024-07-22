@@ -1,0 +1,40 @@
+apiVersion: v2
+description: kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator. Internal copy for EDDGE usage
+icon: https://raw.githubusercontent.com/prometheus/prometheus.github.io/master/assets/prometheus_logo-cb55bb5c346.png
+type: application
+maintainers:
+  - name: EF-USAF
+    email: ethan.fison@us.af.mil
+name: kube-prometheus-stack
+sources:
+  - https://github.com/309thEDDGE/kube-prometheus
+version: 61.3.1
+appVersion: v0.75.1
+kubeVersion: ">=1.19.0-0"
+home: https://github.com/prometheus-operator/kube-prometheus
+keywords:
+  - operator
+  - prometheus
+  - kube-prometheus
+
+dependencies:
+  - name: crds
+    version: "0.0.0"
+    repository: file://./charts/crds
+    condition: crds.enabled
+  - name: kube-state-metrics
+    version: "5.20.*"
+    repository: file://./charts/kube-state-metrics
+    condition: kubeStateMetrics.enabled
+  - name: prometheus-node-exporter
+    version: "4.36.*"
+    repository: file://./charts/prometheus-node-exporter
+    condition: nodeExporter.enabled
+  - name: grafana
+    version: "8.0.*"
+    repository: file://./charts/grafana
+    condition: grafana.enabled
+  - name: prometheus-windows-exporter
+    repository: file://./charts/prometheus-windows-exporter
+    version: "0.3.*"
+    condition: windowsMonitoring.enabled
